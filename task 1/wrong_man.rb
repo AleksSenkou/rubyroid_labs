@@ -19,13 +19,14 @@ Shoes.app height: 750, width: 800 do
     stroke black
     fill black
     strokewidth 2
-    line 600, 100, 600, 200 
+    line 600, 100, 600, 220 
   end
 
   def world
     stroke white
     fill white
-    rect 0, 0, 800, 800
+    rect 400, 100, 800, 800
+    #rect 0, 600, 800, 800
     sea
     mountain
     cable
@@ -54,7 +55,37 @@ Shoes.app height: 750, width: 800 do
     para "<i> #{text} </i>",margin_left: 20, undercolor: whiсh_man, underline: 'double', size: 16
   end
 
+  def red_befor_death(img_red)
+    img_red.move 580, 170
+    write_text('red', 'Help !')
+    a = animate 50 do |i|
+      y = 170 + i 
+      img_red.move 580, y
+      if y > 670
+        world
+        a.stop
+      end
+    end
+  end
+
+  def blue_appeared(img_blue)
+    write_text('blue', "Wait, i'm here")
+    img_blue.move 800, 16
+    a = animate 30 do |i|
+      x = 800 - i
+      img_blue.move x, 16
+      a.stop if x < 600
+    end
+  end
+
   world
-  man(600, 200, red)
-  man(700, 47, green)
+  #man(600, 200, red)
+  #man(700, 47, green)
+  img_blue = image 'blue.png', height: 85, width: 40
+  img_red = image 'red.png', height: 85, width: 40
+  red_befor_death(img_red)
+  write_text('red', 'Help me, please !')
+  blue_appeared(img_blue)
+  write_text('blue', 'Fuck!')
+  write_text('blue', 'Sorry, man')
 end
