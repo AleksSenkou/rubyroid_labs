@@ -15,13 +15,6 @@ Shoes.app height: 750, width: 800 do
     rect 600, 100, 70, 35   
   end
 
-  def cable
-    stroke black
-    fill black
-    strokewidth 2
-    line 600, 100, 600, 220 
-  end
-
   def world
     stroke white
     fill white
@@ -29,7 +22,6 @@ Shoes.app height: 750, width: 800 do
     #rect 0, 600, 800, 800
     sea
     mountain
-    cable
   end
 
   def man(x, y, color)
@@ -57,10 +49,10 @@ Shoes.app height: 750, width: 800 do
 
   def red_befor_death(img_red)
     img_red.move 580, 170
-    write_text('red', 'Help !')
-    a = animate 50 do |i|
-      y = 170 + i 
-      img_red.move 580, y
+    write_text('red', 'Goodbuy, world!')
+    a = animate 80 do |i|
+      y = 35 + i 
+      img_red.move 560, y
       if y > 670
         world
         a.stop
@@ -78,6 +70,7 @@ Shoes.app height: 750, width: 800 do
     end
   end
 
+  alert 'Start'
   world
   #man(600, 200, red)
   #man(700, 47, green)
@@ -87,5 +80,4 @@ Shoes.app height: 750, width: 800 do
   write_text('red', 'Help me, please !')
   blue_appeared(img_blue)
   write_text('blue', 'Fuck!')
-  write_text('blue', 'Sorry, man')
 end
