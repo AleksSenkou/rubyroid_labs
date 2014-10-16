@@ -76,13 +76,13 @@ animation[3] =  %Q(
     |_____|  1111                |
 )
 
-loop {      
-  [0, 1, 2, 3].each do |i|
-    puts animation[i]
+loop do
+  animation.each do |frame|
+    puts frame
     sleep 0.15
     system "clear"
   end
-}
+end
 
 
 
