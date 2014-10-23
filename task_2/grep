@@ -1,0 +1,30 @@
+#!/usr/bin/env ruby
+
+def get_file_as_string(file_name)
+	data = ""
+	File.open(file_name, "r").each do |file|
+		data += file
+	end	
+	data
+end
+
+file_data = get_file_as_string(ARGV[1])
+lines_count = file_data.lines.count
+puts file_data
+p lines_count
+
+case ARGV[0]
+	when "-A"
+		puts "-A"
+	when "-e"
+		puts "-e"
+	when "-R"
+		puts "-R"
+	when "-Z"
+		puts "-Z"
+	else
+		puts "No such comand"
+end
+
+#p Dir.entries "/"
+
