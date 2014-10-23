@@ -1,18 +1,24 @@
 #!/usr/bin/env ruby
 
-def get_file_as_string(file_name)
-	data = ""
+def get_file_as_array(file_name)
+	data = []
 	File.open(file_name, "r").each do |file|
-		data += file
+		data << file 
 	end	
 	data
 end
 
-file_data = get_file_as_string(ARGV[1])
-lines_count = file_data.lines.count
-puts file_data
-p lines_count
+file_lines = get_file_as_array(ARGV[1])
+#lines_count = file_lines.lines.count
+puts file_lines
+puts '#########################'
 
+puts ARGV[0] + ":"
+file_lines.each_with_index do |line, i|
+	puts file_lines[(i - 1)..(i + 1)] if line["#{ARGV[0]}"]
+end
+
+=begin
 case ARGV[0]
 	when "-A"
 		puts "-A"
@@ -25,6 +31,9 @@ case ARGV[0]
 	else
 		puts "No such comand"
 end
+=end
 
+#puts file_lines
+#p lines_count
 #p Dir.entries "/"
 
