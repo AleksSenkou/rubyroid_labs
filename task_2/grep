@@ -1,36 +1,42 @@
 #!/usr/bin/env ruby
 
 def get_file_as_array(file_name)
-	data = []
-	File.open(file_name, "r").each do |file|
-		data << file 
-	end	
-	data
+  data = []
+  File.open(file_name, "r").each do |file|
+    data << file
+  end
+  data
 end
 
+def a_option
+  3.upto(ARGV.count - 1) do |which|
+    next if !File.exists?("#{ARGV[which]}")
+    puts "File '#{ARGV[which]}', symbol #{ARGV[2]}:"
+    file_lines = get_file_as_array(ARGV[which])
+    file_lines.each_with_index do |line, num|
+      puts file_lines[num - ARGV[1].to_i..num + ARGV[1].to_i] if line["#{ARGV[2]}"]
+    end
+  end
+end
 
-	 
+def e_option
+
+end
+
 case ARGV[0]
-	when "-A"
-		3.upto(ARGV.count - 3) do |which|
-			puts "File '#{ARGV[which]}', symbol #{ARGV[2]}:"
-			file_lines = get_file_as_array(ARGV[which])	
-			file_lines.each_with_index do |line, i|
-				puts file_lines[i - ARGV[1]..i + ARGV[1]] if line["#{ARGV[0]}"]
-			end
-		end
-	when "-e"
-		puts "-e"
-	when "-R"
-		puts "-R"
-	when "-Z"
-		puts "-Z"
-	else
-		puts "No such comand"
+  when '-A'
+    a_option
+  when "-e"
+    e_option
+  when "-R"
+    puts "-R"
+  when "-Z"
+    puts "-Z"
+  else
+    puts "No such comand"
 end
 
 
-#puts file_lines
 #p lines_count
 #p Dir.entries "/"
 
