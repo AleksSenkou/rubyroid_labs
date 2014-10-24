@@ -8,26 +8,27 @@ def get_file_as_array(file_name)
   data
 end
 
-def a_option
-  3.upto(ARGV.count - 1) do |which|
+def a_or_e_option(arg_for_comp)
+  puts "Option #{ARGV[0]}"
+
+  (arg_for_comp + 1).upto(ARGV.count - 1) do |which|
     next if !File.exists?("#{ARGV[which]}")
-    puts "File '#{ARGV[which]}', symbol #{ARGV[2]}:"
+    puts '-' * 40
+    puts "File '#{ARGV[which]}', symbol #{ARGV[arg_for_comp]}:"
     file_lines = get_file_as_array(ARGV[which])
     file_lines.each_with_index do |line, num|
-      puts file_lines[num - ARGV[1].to_i..num + ARGV[1].to_i] if line["#{ARGV[2]}"]
+      if /#{ARGV[arg_for_comp]}/.match line
+        puts ARGV[0] == '-A' ? file_lines[num - ARGV[1].to_i..num + ARGV[1].to_i] : line 
+      end
     end
   end
-end
-
-def e_option
-
-end
+end  
 
 case ARGV[0]
   when '-A'
-    a_option
+    a_or_e_option(2)
   when "-e"
-    e_option
+    a_or_e_option(1)
   when "-R"
     puts "-R"
   when "-Z"
