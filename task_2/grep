@@ -1,21 +1,15 @@
 #!/usr/bin/env ruby
-
-def get_file_as_array(file_name)
-  data = []
-  File.open(file_name, "r").each do |file|
-    data << file
-  end
-  data
-end
+require "find"
 
 def a_or_e_option(arg_for_comp)
   puts "Option #{ARGV[0]}"
 
   (arg_for_comp + 1).upto(ARGV.count - 1) do |which|
-    next if !File.exists?("#{ARGV[which]}")
+    file = ARGV[which]
+    next if !File.exists?(file)
     puts '-' * 40
-    puts "File '#{ARGV[which]}', symbol #{ARGV[arg_for_comp]}:"
-    file_lines = get_file_as_array(ARGV[which])
+    puts "File '#{file}', symbol #{ARGV[arg_for_comp]}:"
+    file_lines = File.readlines(file)
     file_lines.each_with_index do |line, num|
       if /#{ARGV[arg_for_comp]}/.match line
         puts ARGV[0] == '-A' ? file_lines[num - ARGV[1].to_i..num + ARGV[1].to_i] : line 
@@ -24,17 +18,33 @@ def a_or_e_option(arg_for_comp)
   end
 end  
 
+def r_option
+  puts "Option #{ARGV[0]}"
+
+  files = []
+  Find.find("#{ARGV[2]}") { |path| files << path }
+  files.each do |file|
+    next if File.directory?(file)
+    puts '-' * 40
+    puts "File '#{file}', symbol #{ARGV[1]}:"
+    file_lines = File.readlines(file)
+    file_lines.each_with_index do |line, num|
+      puts line if /#{ARGV[1]}/.match line
+    end
+  end
+end
+
 case ARGV[0]
   when '-A'
     a_or_e_option(2)
   when "-e"
     a_or_e_option(1)
   when "-R"
-    puts "-R"
+    r_option
   when "-Z"
     puts "-Z"
   else
-    puts "No such comand"
+    puts "No such command"
 end
 
 
