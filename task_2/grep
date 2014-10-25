@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 require "find"
+require "zlib"
 
 def a_or_e_option(arg_for_comp)
   puts "Option #{ARGV[0]}"
@@ -34,6 +35,28 @@ def r_option
   end
 end
 
+def z_option
+  puts "Option #{ARGV[0]}"
+
+  
+
+  (2).upto(ARGV.count - 1) do |which|
+    file = ARGV[which]
+    next if !File.exists?(file)
+    puts '-' * 40
+    puts "File '#{file}', symbol #{ARGV[1]}:"
+    unpack = Zlib::GzipReader.open(file)
+    file_lines = unpack.readlines
+    file_lines.each_with_index do |line, num|
+      if /#{ARGV[1]}/.match line
+        puts ARGV[0] == '-A' ? file_lines[num - ARGV[1].to_i..num + ARGV[1].to_i] : line 
+      end
+    end
+  end
+end
+
+exit if ARGV.count < 3 
+
 case ARGV[0]
   when '-A'
     a_or_e_option(2)
@@ -41,13 +64,8 @@ case ARGV[0]
     a_or_e_option(1)
   when "-R"
     r_option
-  when "-Z"
-    puts "-Z"
+  when "-z"
+    z_option
   else
     puts "No such command"
 end
-
-
-#p lines_count
-#p Dir.entries "/"
-
