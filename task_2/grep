@@ -15,11 +15,11 @@ def files_filling(arg_for_comp)
 end
 
 def file_reading(file)
-  if ARGV[0] == '-z'
+  file_lines = if ARGV[0] == '-z'
     unpack = Zlib::GzipReader.open(file)
-    file_lines = unpack.readlines
+    unpack.readlines
   else
-    file_lines = File.readlines(file)
+    File.readlines(file)
   end
 end
 
