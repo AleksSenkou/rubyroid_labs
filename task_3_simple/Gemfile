@@ -1,0 +1,4 @@
+source 'http://rubygems.org'
+
+gem 'mechanize', '~> 2.7.3'
+gem 'colorize', '~> 0.7.3'
