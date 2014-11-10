@@ -1,13 +1,13 @@
 time_updater
 ============
 
-### Примеры
+### Examples
 
 <p>DateTime.now.ymd => strftime("%y %m %d")</p>
 <p>DateTime.now.Bd => strftime("%B %d")</p>
 <p>DateTime.now.M3N => strftime("%M %3N")</p>
 
-### Документация
+### Documentation
 
 ```
 Date (Year, Month, Day):    

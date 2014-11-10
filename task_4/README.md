@@ -1,10 +1,10 @@
 time_updater
 ============
 
-### Условие
-Создать гем, который будет monkeypatch'ить объекты Time в руби и добавит  функционал http://www.ruby-doc.org/core-2.1.4/Time.html#method-i-strftime
+### Condition
+Create a gem that will monkeypatch'it Time object in Ruby and add functionality http://www.ruby-doc.org/core-2.1.4/Time.html#method-i-strftime
 
-### Примеры
+### Examples
 
 <p>DateTime.now.ymd => strftime("%y %m %d")</p>
 <p>DateTime.now.Bd => strftime("%B %d")</p>
