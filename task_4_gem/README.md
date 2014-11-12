@@ -9,3 +9,5 @@ Create a gem that will monkeypatch'it Time object in Ruby and add functionality 
 <p>DateTime.now.ymd => strftime("%y %m %d")</p>
 <p>DateTime.now.Bd => strftime("%B %d")</p>
 <p>DateTime.now.M3N => strftime("%M %3N")</p>
+
+	unavailable_elements = ['E','f','i','J','K','o','O','q','Q']

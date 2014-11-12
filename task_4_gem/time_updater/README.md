@@ -9,6 +9,7 @@ time_updater
 
 ### Documentation
 
+  unavailable_elements = ['E','f','i','J','K','o','O','q','Q']
 ```
 Date (Year, Month, Day):    
 
