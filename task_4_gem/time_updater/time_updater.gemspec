@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'time_updater'
-  s.version     = '0.0.31'
+  s.version     = '0.0.4'
   s.date        = '2014-11-10'
   s.summary     = "Time updater"
   s.description = "Update methods from Time class"
@@ -11,6 +11,9 @@ Gem::Specification.new do |s|
   s.platform    = Gem::Platform::RUBY
   s.license     = 'MIT'
 
+  s.required_ruby_version = Gem::Requirement.new(">= 2.1.3")
+  s.required_rubygems_version = ">= 1.3.4"
+
   s.add_development_dependency 'bundler', '~> 1.7'
-  s.add_development_dependency 'colorize', '~> 0.7', '>= 0.7.3'
+  s.add_development_dependency 'colorize', '>= 0.7.3'
 end

@@ -1,4 +1,4 @@
 require "time_updater"
 
-time = Time_updater.new
+time = TimeUpdater.new
 time.time_now

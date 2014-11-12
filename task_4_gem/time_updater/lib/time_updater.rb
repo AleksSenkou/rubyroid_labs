@@ -1,6 +1,6 @@
 require "colorize"
 
-class Time_updater
+class TimeUpdater
   def time_now
     puts Time.now    
   end  
