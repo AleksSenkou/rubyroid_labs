@@ -1,0 +1,13 @@
+require_relative "lib/life_game.rb"
+
+width = 60
+heigth = 40
+
+life_game = LifeGame.new(width, heigth)
+
+loop do
+  system "clear"
+  life_game.print_card
+  sleep 0.1
+  life_game.next_gen!
+end
