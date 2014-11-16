@@ -1,0 +1,17 @@
+PATH
+  remote: .
+  specs:
+    simple_life_game (0.0.1)
+
+GEM
+  remote: http://rubygems.org/
+  specs:
+    colorize (0.7.3)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  bundler (~> 1.7)
+  colorize (~> 0.7, >= 0.7.3)
+  simple_life_game!

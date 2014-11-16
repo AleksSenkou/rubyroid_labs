@@ -1,4 +1,4 @@
-require_relative "lib/life_game.rb"
+require "simple_life_game"
 
 width = 60
 heigth = 40
