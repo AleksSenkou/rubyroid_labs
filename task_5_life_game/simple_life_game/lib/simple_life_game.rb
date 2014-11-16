@@ -2,10 +2,10 @@ require "colorize"
 require_relative "cell"
 
 class LifeGame
-  def initialize(width = 60, heigth = 40) 
+  def initialize(width = 60, height = 40) 
     @width = width
-    @heigth = heigth
-    @card = Array.new(heigth) { Array.new(width) { Cell.new } }
+    @height = height
+    @card = Array.new(height) { Array.new(width) { Cell.new } }
   end
 
   def next_gen!
@@ -23,8 +23,8 @@ class LifeGame
 
   private
   def alive_neighbors(y, x) 
-    up = (y == 0) ? @heigth - 1 : y - 1 
-    down = (y == @heigth - 1) ? 0 : y + 1 
+    up = (y == 0) ? @height - 1 : y - 1 
+    down = (y == @height - 1) ? 0 : y + 1 
     left = (x == 0) ? @width - 1 : x - 1 
     right = (x == @width - 1) ? 0 : x + 1 
 

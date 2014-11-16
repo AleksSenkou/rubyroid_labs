@@ -1,9 +1,9 @@
 require "simple_life_game"
 
 width = 60
-heigth = 40
+height = 40
 
-life_game = LifeGame.new(width, heigth)
+life_game = LifeGame.new(width, height)
 
 loop do
   system "clear"
