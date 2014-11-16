@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name        = 'time_updater'
-  s.version     = '0.0.7'
-  s.date        = '2014-11-12'
+  s.version     = '0.0.8'
+  s.date        = '2014-11-16'
   s.summary     = "Time updater"
   s.description = "Monkeypatch'ing Time object in Ruby and adding functionality http://www.ruby-doc.org/core-2.1.4/Time.html#method-i-strftime"
   s.authors     = ["Aleks Senkou"]
