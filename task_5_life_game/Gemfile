@@ -1,0 +1,4 @@
+source 'http://rubygems.org'	
+
+gem 'simple_life_game'
+gem 'colorize', '~> 0.7.3'
