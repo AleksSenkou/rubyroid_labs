@@ -1,3 +1,3 @@
 Life Game
 =========
-Game "Life" in console implementation.
+Web application Game of "Life".
