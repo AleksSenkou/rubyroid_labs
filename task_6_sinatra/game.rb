@@ -1,17 +1,18 @@
 require "sinatra"
+require "slim"
+
 require_relative "lib/life_game.rb"
 width = 80
 height = 60
 
 # get ('/') { LifeGame.new(width, height) } 
-set :haml, format: :html5
 
 get '/' do
   "<a href='/bar'>do something</a>"
 end
 
 get '/bar' do
-  haml "%h1 hello"
+  slim :index
 end
 
 not_found do
@@ -19,11 +20,7 @@ not_found do
 end
 
 
-
-
-
-
-# width = 60
+# width = 60 
 # heigth = 40
 # 
 # life_game = LifeGame.new(width, heigth)

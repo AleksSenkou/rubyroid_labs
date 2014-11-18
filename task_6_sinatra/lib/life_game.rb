@@ -2,7 +2,7 @@ require "colorize"
 require_relative "cell"
 
 class LifeGame
-  def initialize(width = 60, height = 40) 
+  def nitialize(width = 60, height = 40) 
     @width = width
     @height = height
     @card = Array.new(height) { Array.new(width) { Cell.new } }
