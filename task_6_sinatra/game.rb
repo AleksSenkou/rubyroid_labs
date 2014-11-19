@@ -2,21 +2,29 @@ require "sinatra"
 require "slim"
 require_relative "lib/life_game.rb"
 
-width = 80
-height = 60
+# width = 80
+# height = 60
 
-# get ('/') { LifeGame.new(width, height) } 
-
-get '/' do
-  "<a href='/bar'>do something</a>"
+helpers do
+  def show_404
+    status 404
+    @page_title = '404'
+    slim :'404'
+  end
 end
 
-get '/bar' do
+get '/' do
+  @page_title = 'Home'
   slim :index
 end
 
+get '/bar' do
+  @page_title = 'index'
+  slim :bar
+end
+
 not_found do
-  'No such page.'
+  show_404
 end
 
 

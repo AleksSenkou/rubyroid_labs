@@ -1,9 +1,6 @@
-html
-  head
-    title Conway's Game of Life
-    link href="/css/bootstrap.css" rel="stylesheet"
-    link href="/css/bootstrap-responsive.css" rel="stylesheet"
-  body
-    == yield
-    script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/iquery.min.js"
-    script src="/js/bootstrap.min.js" 
+== slim :"_partials/header"  
+h1 = @page_title
+
+== yield
+
+== slim :"_partials/footer"
