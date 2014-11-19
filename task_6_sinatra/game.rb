@@ -1,7 +1,7 @@
 require "sinatra"
 require "slim"
-
 require_relative "lib/life_game.rb"
+
 width = 80
 height = 60
 
