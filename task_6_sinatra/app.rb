@@ -1,6 +1,6 @@
 require 'rubygems'
 require 'sinatra'
-require "slim"
+require "slim"  
 
 helpers do
   def show_404
@@ -10,6 +10,8 @@ helpers do
 end
 
 get '/' do
+  @width = 900
+  @height = 450
   slim :index
 end
 
