@@ -1,9 +1,8 @@
-/*jslint onevar: true, undef: false, nomen: true, eqeqeq: true, plusplus: false, bitwise: true, regexp: true, newcap: true, immed: true  */
-
 /**
  * Game of Life - JS & CSS
  * http://pmav.eu
  * 04/Sep/2010
+ * updated in 2014 by Aleks
  */
 
 (function () {
@@ -55,7 +54,7 @@
 
 
     // Grid style
-    grid : {
+    grid : { // 3 the best
       current : 0,
 
       schemes : [
@@ -107,7 +106,7 @@
 
 
     // Cell colors
-    colors : {
+    colors : { // 3 the best
       current : 0,
       schedule : false,
 
@@ -750,36 +749,6 @@
         this.actualState = [];
       },
 
-
-      /**
-       *
-  NOTE: The following code is slower than the used one.
-  
-  (...)
-  
-  if (allDeadNeighbours[key] === undefined) {
-    allDeadNeighbours[key] = {
-      x: deadNeighbours[m][0],
-      y: deadNeighbours[m][1],
-      i: 1
-    };
-  } else {
-    allDeadNeighbours[key].i++;
-  }
-  
-  (...)
-      
-  // Process dead neighbours
-  for (key in allDeadNeighbours) {
-    
-    if (allDeadNeighbours[key].i === 3) { // Add new Cell
-    
-    this.addCell(allDeadNeighbours[key].x, allDeadNeighbours[key].y, newState);
-    alive++;
-    this.redrawList.push([allDeadNeighbours[key].x, allDeadNeighbours[key].y, 1]);
-    }
-  }
-  */
       nextGeneration : function() {
         var x, y, i, j, m, n, key, t1, t2, alive = 0, neighbours, deadNeighbours, allDeadNeighbours = {}, newState = [];
         this.redrawList = [];
