@@ -40,24 +40,23 @@ $(document).ready(function() {
     size_y: parseInt(drawingCanvas.getAttribute("height"))
   }
 
-  Cell.size_x = Canvas.size_x / Cell.count_x;
-  Cell.size_y = Canvas.size_y / Cell.count_y;
+  Cell.size_x = (Canvas.size_x - 1) / Cell.count_x;
+  Cell.size_y = (Canvas.size_y - 1) / Cell.count_y;
   
   Canvas.drawGridLines = function() {
     context.lineWidth = 1;
     context.strokeStyle = "#000000";
-    
+
     for(var i = 0; i <= this.size_x; i += Cell.size_x) {
-      context.moveTo(i, 0);
-      context.lineTo(i, this.size_y);  
-      context.stroke();
+      context.moveTo(i + 0.5, 0);
+      context.lineTo(i + 0.5, this.size_y);  
     }
   
     for(i = 0; i <= this.size_y; i += Cell.size_y) {
-      context.moveTo(0, i);
-      context.lineTo(this.size_x, i);
-      context.stroke();
-    }    
+      context.moveTo(0, i + 0.5);
+      context.lineTo(this.size_x, i + 0.5);
+    }   
+    context.stroke(); 
   };
         
   Canvas.updateGridCells = function() {

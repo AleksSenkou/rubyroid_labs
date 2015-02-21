@@ -15,8 +15,8 @@ end
 
 get '/' do
   @title = "Conway's Game of Life"
-  @map_width = 1000
-  @map_height = 500
+  @map_width = 1001
+  @map_height = 501
   slim :index
 end
 
