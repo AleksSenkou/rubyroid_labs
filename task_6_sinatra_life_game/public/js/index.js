@@ -2,21 +2,19 @@
 
 $(document).ready(function() {
   var Cell = {
-    count_x: 40, 
-    count_y: 20,
     position_x: 0,
-    position_y: 0 
+    position_y: 0,
+    neighbors_num: 0,
+    DEAD: 0,
+    ALIVE: 1
   }
 
   var Life = {
-    DEAD: 0,
-    ALIVE: 1,
-    STOPPED: 0,
-    RUNNING : 1,
-    state: 0
+    cells_count_x: 40, 
+    cells_count_y: 20
   };
 
-  Life.gridInit = function(x, y, state) {
+  Life.gridInit = function(y, x, state) {
       var matrix = [];
       for(var i = 0; i < y; i++) {
         matrix[i] = [];
@@ -27,9 +25,46 @@ $(document).ready(function() {
       return matrix;
   };
 
-  Life.grid = Life.gridInit(Cell.count_y, Cell.count_x, 0);
+  Life.grid = Life.gridInit(Life.cells_count_y, Life.cells_count_x, Cell.DEAD);
 
-  
+  Life.updateGameGrid = function() {
+    var next_gen_grid = Life.gridInit(Life.cells_count_y, Life.cells_count_x, 0);
+
+    for(var y = 0; y < Life.cells_count_y; y++) {
+      for(var x = 0; x < Life.cells_count_x; x++) {
+        Life.findNeighbors(y, x);
+        if(Life.grid[y][x] == Cell.DEAD) {
+          if(Cell.neighbors_num == 3) {
+            next_gen_grid[y][x] = Cell.ALIVE;
+          }
+        } else {
+          if(Cell.neighbors_num == 2 || Cell.neighbors_num == 3) {
+            next_gen_grid[y][x] = Cell.ALIVE;
+          }
+        }
+      }
+    }
+
+    Life.copyGrid(next_gen_grid, Life.grid);
+  };
+
+  Life.findNeighbors = function(y, x) {
+    var up = (y == 0) ? Life.cells_count_y - 1 : y - 1;
+    var down = (y == Life.cells_count_y - 1) ? 0 : y + 1;
+    var left = (x == 0) ? Life.cells_count_x - 1 : x - 1;
+    var right = (x == Life.cells_count_x - 1) ? 0 : x + 1;
+
+    Cell.neighbors_num = Life.grid[down][left] + Life.grid[down][x] +
+                         Life.grid[down][right] + Life.grid[y][right] +
+                         Life.grid[y][left] + Life.grid[up][left] +
+                         Life.grid[up][x] + Life.grid[up][right];
+  };
+
+  Life.copyGrid = function(source, destination) {
+    for(var y = 0; y < Life.cells_count_y; y++) {
+      destination[y] = source[y].slice(0);
+    } 
+  };
 
 ///////////////////////////////////////////////////////////
 ////////////////// WORK WITH ANIMATION ////////////////////
@@ -39,41 +74,47 @@ $(document).ready(function() {
   clearButton = document.getElementById("buttonClear");
   runButton = document.getElementById("buttonRun");
   stepButton = document.getElementById("buttonStep");
+  stopButton = document.getElementById("buttonStop");
   context = drawingCanvas.getContext("2d");
   
   var Canvas = {
     size_x: parseInt(drawingCanvas.getAttribute("width")),
-    size_y: parseInt(drawingCanvas.getAttribute("height"))
+    size_y: parseInt(drawingCanvas.getAttribute("height")),
+    STOPPED: 0,
+    RUNNING : 1,
+    DELAY: 70,
+    state: 0,
+    interval: null
   }
 
-  Cell.size_x = (Canvas.size_x - 1) / Cell.count_x;
-  Cell.size_y = (Canvas.size_y - 1) / Cell.count_y;
+  Cell.size_x = (Canvas.size_x - 1) / Life.cells_count_x;
+  Cell.size_y = (Canvas.size_y - 1) / Life.cells_count_y;
   
   Canvas.drawGridLines = function() {
     context.lineWidth = 1;
     context.strokeStyle = "#000000";
 
-    for(var i = 0; i <= this.size_x; i += Cell.size_x) {
-      context.moveTo(i + 0.5, 0);
-      context.lineTo(i + 0.5, this.size_y);  
+    for(var x = 0; x <= this.size_x; x += Cell.size_x) {
+      context.moveTo(x + 0.5, 0);
+      context.lineTo(x + 0.5, this.size_y);  
     }
   
-    for(i = 0; i <= this.size_y; i += Cell.size_y) {
-      context.moveTo(0, i + 0.5);
-      context.lineTo(this.size_x, i + 0.5);
+    for(var y = 0; y <= this.size_y; y += Cell.size_y) {
+      context.moveTo(0, y + 0.5);
+      context.lineTo(this.size_x, y + 0.5);
     }   
     context.stroke(); 
   };
         
   Canvas.updateGridCells = function() {
-    for(var i = 0; i <= Cell.count_y; i++) {
-      for(var j = 0; j <= Cell.count_x; j++) {
-        if (Life.grid[i][j] == Life.ALIVE) {
+    for(var y = 0; y <= Life.cells_count_y; y++) {
+      for(var x = 0; x <= Life.cells_count_x; x++) {
+        if (Life.grid[y][x] == Cell.ALIVE) {
           context.fillStyle = "#4169E1";                 
         } else {
           context.fillStyle = "#eee";
         }
-        context.fillRect(j * Cell.size_x + 1, i * Cell.size_y + 1,
+        context.fillRect(x * Cell.size_x + 1, y * Cell.size_y + 1,
                            Cell.size_x - 1,     Cell.size_y - 1);
       }
     }
@@ -81,7 +122,7 @@ $(document).ready(function() {
 
   function canvasOnClickHandler(event) {
     getCursorPosition(event);
-    var state = Life.grid[Cell.position_y][Cell.position_x] == Life.ALIVE ? Life.DEAD : Life.ALIVE;
+    var state = Life.grid[Cell.position_y][Cell.position_x] == Cell.ALIVE ? Cell.DEAD : Cell.ALIVE;
     Life.grid[Cell.position_y][Cell.position_x] = state;
     Canvas.updateGridCells();
   };
@@ -104,12 +145,28 @@ $(document).ready(function() {
     Cell.position_x = Math.floor((x - 2) / Cell.size_x);
   };
 
-  clearButton.onclick = function() {
-    Life.grid = Life.gridInit(Canvas.size_y, Canvas.size_x, Life.DEAD);
-    Life.state = Life.STOPPED;
+  function update() {
+    Life.updateGameGrid();
     Canvas.updateGridCells();
+  };
+
+  clearButton.onclick = function() {
+    Life.grid = Life.gridInit(Canvas.size_y, Canvas.size_x, Cell.DEAD);
+    clearInterval(Canvas.interval);
+    Canvas.state = Canvas.STOPPED;
+    Canvas.updateGridCells();
+  };
+
+  runButton.onclick = function() {
+    Canvas.interval = setInterval(function() { update(); }, Canvas.DELAY);
+    Canvas.state = Canvas.RUNNING;
   }
-          
+
+  stopButton.onclick = function() {
+    clearInterval(Canvas.interval);
+    Canvas.state = Canvas.STOPPED;
+  }
+           
   Canvas.drawGridLines();
   drawingCanvas.addEventListener("click", canvasOnClickHandler, false);
 
