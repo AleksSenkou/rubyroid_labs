@@ -12,7 +12,7 @@ $(document).ready(function() {
   var Life = {
     cells_count_x: 40, 
     cells_count_y: 20
-  };
+  }
 
   Life.gridInit = function(y, x, state) {
       var matrix = [];
@@ -66,15 +66,23 @@ $(document).ready(function() {
     } 
   };
 
+  Life.checkGameGrid = function() {
+    for(var y = 0; y < Life.cells_count_y; y++) {
+      for(var x = 0; x < Life.cells_count_x; x++) {
+        if(Life.grid[y][x] == 1) { return true; }
+      }
+    }
+    return false;
+  };
+
 ///////////////////////////////////////////////////////////
 ////////////////// WORK WITH ANIMATION ////////////////////
 ///////////////////////////////////////////////////////////
 
   drawingCanvas = document.getElementById("canvas");
   clearButton = document.getElementById("buttonClear");
-  runButton = document.getElementById("buttonRun");
+  stateButton = document.getElementById("buttonState");
   stepButton = document.getElementById("buttonStep");
-  stopButton = document.getElementById("buttonStop");
   context = drawingCanvas.getContext("2d");
   
   var Canvas = {
@@ -82,7 +90,7 @@ $(document).ready(function() {
     size_y: parseInt(drawingCanvas.getAttribute("height")),
     STOPPED: 0,
     RUNNING : 1,
-    DELAY: 70,
+    DELAY: 50,
     state: 0,
     interval: null
   }
@@ -151,24 +159,35 @@ $(document).ready(function() {
   };
 
   clearButton.onclick = function() {
+    if(Canvas.state == Canvas.RUNNING) { stateButton.stopGame(); }
     Life.grid = Life.gridInit(Canvas.size_y, Canvas.size_x, Cell.DEAD);
-    clearInterval(Canvas.interval);
-    Canvas.state = Canvas.STOPPED;
     Canvas.updateGridCells();
   };
 
-  runButton.onclick = function() {
+  stepButton.onclick = function() {
+    if(Canvas.state == Canvas.RUNNING) { stateButton.stopGame(); } 
+    update();
+  };
+
+  stateButton.onclick = function() {
+    Canvas.state == Canvas.STOPPED ? stateButton.runGame() : stateButton.stopGame();
+  };
+
+  stateButton.runGame = function() {
+    if(!Life.checkGameGrid()) { alert("Game grid is empty"); return false; }
     Canvas.interval = setInterval(function() { update(); }, Canvas.DELAY);
     Canvas.state = Canvas.RUNNING;
-  }
+    $('#buttonState').css('background-color','#d9534f');
+    stateButton.innerHTML = "Stop";
+  };
 
-  stopButton.onclick = function() {
+  stateButton.stopGame = function() {
     clearInterval(Canvas.interval);
     Canvas.state = Canvas.STOPPED;
-  }
+    $('#buttonState').css('background-color','#428bca');
+    stateButton.innerHTML = "Run";
+  };
            
   Canvas.drawGridLines();
   drawingCanvas.addEventListener("click", canvasOnClickHandler, false);
-
 });
-
