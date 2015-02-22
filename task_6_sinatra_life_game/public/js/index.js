@@ -1,11 +1,19 @@
 //require("canvas.js");
 
 $(document).ready(function() {
+  var Cell = {
+    count_x: 40, 
+    count_y: 20,
+    position_x: 0,
+    position_y: 0 
+  }
+
   var Life = {
     DEAD: 0,
     ALIVE: 1,
     STOPPED: 0,
-    RUNNING : 1
+    RUNNING : 1,
+    state: 0
   };
 
   Life.gridInit = function(x, y, state) {
@@ -18,21 +26,19 @@ $(document).ready(function() {
       }
       return matrix;
   };
-          
-  var Cell = {
-    count_x: 40, 
-    count_y: 20,
-    position_x: 0,
-    position_y: 0 
-  }
 
   Life.grid = Life.gridInit(Cell.count_y, Cell.count_x, 0);
+
+  
 
 ///////////////////////////////////////////////////////////
 ////////////////// WORK WITH ANIMATION ////////////////////
 ///////////////////////////////////////////////////////////
 
   drawingCanvas = document.getElementById("canvas");
+  clearButton = document.getElementById("buttonClear");
+  runButton = document.getElementById("buttonRun");
+  stepButton = document.getElementById("buttonStep");
   context = drawingCanvas.getContext("2d");
   
   var Canvas = {
@@ -97,9 +103,15 @@ $(document).ready(function() {
     Cell.position_y = Math.floor((y - 4) / Cell.size_y);
     Cell.position_x = Math.floor((x - 2) / Cell.size_x);
   };
+
+  clearButton.onclick = function() {
+    Life.grid = Life.gridInit(Canvas.size_y, Canvas.size_x, Life.DEAD);
+    Life.state = Life.STOPPED;
+    Canvas.updateGridCells();
+  }
           
-    Canvas.drawGridLines();
-    drawingCanvas.addEventListener("click", canvasOnClickHandler, false);
+  Canvas.drawGridLines();
+  drawingCanvas.addEventListener("click", canvasOnClickHandler, false);
 
 });
 
