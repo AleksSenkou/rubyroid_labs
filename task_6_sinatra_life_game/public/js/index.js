@@ -159,13 +159,15 @@ $(document).ready(function() {
   };
 
   clearButton.onclick = function() {
+    if(!Life.checkGameGrid()) { alert("Game grid is empty"); return false; }
     if(Canvas.state == Canvas.RUNNING) { stateButton.stopGame(); }
     Life.grid = Life.gridInit(Canvas.size_y, Canvas.size_x, Cell.DEAD);
     Canvas.updateGridCells();
   };
 
   stepButton.onclick = function() {
-    if(Canvas.state == Canvas.RUNNING) { stateButton.stopGame(); } 
+    if(!Life.checkGameGrid()) { alert("Game grid is empty"); return false; }
+    if(Canvas.state == Canvas.RUNNING) { stateButton.stopGame(); }
     update();
   };
 
