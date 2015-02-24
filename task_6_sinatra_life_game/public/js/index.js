@@ -154,6 +154,7 @@ $(document).ready(function() {
   };
 
   function update() {
+    if(!Life.checkGameGrid()) { stateButton.stopGame(); }
     Life.updateGameGrid();
     Canvas.updateGridCells();
   };
