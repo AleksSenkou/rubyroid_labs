@@ -16,9 +16,14 @@ $(document).ready(function() {
 
   Life.gridInit = function(y, x, state) {
       var matrix = [];
+      var flag = state;
       for(var i = 0; i < y; i++) {
         matrix[i] = [];
         for(var j = 0; j < x; j++) {
+          if (flag == "rand") {
+            state = Math.random();
+            (state < 0.5) ? state = 0 : state = 1;
+          }
           matrix[i][j] = state;
         }
       }
@@ -80,6 +85,7 @@ $(document).ready(function() {
 ///////////////////////////////////////////////////////////
 
   drawingCanvas = document.getElementById("canvas");
+  randomButton = document.getElementById("buttonRandom");
   clearButton = document.getElementById("buttonClear");
   stateButton = document.getElementById("buttonState");
   stepButton = document.getElementById("buttonStep");
@@ -158,6 +164,12 @@ $(document).ready(function() {
     Life.updateGameGrid();
     Canvas.updateGridCells();
   };
+
+  randomButton.onclick = function() {
+    if(Canvas.state == Canvas.RUNNING) { stateButton.stopGame(); }
+    Life.grid = Life.gridInit(Canvas.size_y, Canvas.size_x, "rand");
+    Canvas.updateGridCells();
+  };  
 
   clearButton.onclick = function() {
     if(!Life.checkGameGrid()) { alert("Game grid is empty"); return false; }
